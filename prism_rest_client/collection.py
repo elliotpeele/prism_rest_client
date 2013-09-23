@@ -41,6 +41,7 @@ class Collection(BaseResource):
         if post:
             obj = self._cache.post(self._uri, value)
             self._data.append(obj)
+            return obj
 
         else:
             self._data.append(resource)
