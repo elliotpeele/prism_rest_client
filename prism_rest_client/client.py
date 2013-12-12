@@ -17,10 +17,10 @@ class Client(object):
         self.headers = headers
 
     def get(self, uri):
-        return requests.get(uri)
+        return requests.get(uri, headers=self.headers)
 
     def post(self, uri, data):
-        return requests.post(uri, data)
+        return requests.post(uri, data, headers=self.headers)
 
     def delete(self, uri):
-        return requests.delete(uri)
+        return requests.delete(uri, headers=self.headers)
