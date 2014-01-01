@@ -24,3 +24,6 @@ class Client(object):
 
     def delete(self, uri):
         return requests.delete(uri, headers=self.headers)
+
+    def put(self, uri, data):
+        return requests.put(uri, data, headers=self.headers)

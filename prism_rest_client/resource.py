@@ -25,15 +25,15 @@ class Resource(BaseResource):
         BaseResource.__init__(self, uri, cache, data, metadata)
         self._parent = parent
         self._dirty = False
+        self._local_cache = {}
 
     def __getattr__(self, name):
-        try:
-            val = self._data.get(name)
-        except KeyError:
-            raise AttributeError, "'%r' has no attribute '%s'" % (self, name)
+        val = self._data.get(name)
         obj = self._getObj(name, val)
         if obj is not None:
             return obj
+        elif val is None:
+            raise AttributeError, '%s not in resource' % name
         else:
             return val
 
@@ -74,7 +74,9 @@ class Resource(BaseResource):
         return False
 
     def persist(self):
-        pass
+        if self._dirty:
+            self._cache.put(self._uri, self._data)
+            self._dirty = False
 
     def delete(self):
         self._cache.delete(self._uri)

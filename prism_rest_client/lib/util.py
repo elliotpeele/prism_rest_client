@@ -24,7 +24,7 @@ class AttrDict(dict):
 
     def __getattr__(self, attr):
         if attr.startswith('_'):
-            return dict.__getattr__(self, attr)
+            return dict.__getattribute__(self, attr)
         else:
             return self.__getitem__(attr)
 

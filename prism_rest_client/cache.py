@@ -37,20 +37,29 @@ class InstanceCache(dict):
             return self.__getitem__(uri, force=force, cache=cache)
 
     def get_by_response(self, resp, cache=True):
-        self.resp_cache[resp.url] = resp
+        resp.close()
+        if resp.status_code >= 400:
+            import epdb; epdb.st()
         resource = resp.json(object_hook=JSONRenderer(self))
+#        self.resp_cache[resource._uri] = resp
+
         if cache:
-            self[resp.url] = resource
+            self[resource._uri] = resource
         return resource
 
     def delete(self, uri):
         del self[uri]
-        del self.resp_cache[uri]
-        self.client.delete(uri)
+#        del self.resp_cache[uri]
+        self.client.delete(uri).close()
 
     def post(self, uri, data):
         resp = self.client.post(uri, json.dumps(data))
-        return self.get_by_response(resp)
+        return self.get_by_response(resp, cache=True)
+
+    def put(self, uri, data):
+        resp = self.client.put(uri, json.dumps(data))
+        resource = self.get_by_response(resp, cache=False)
+        self[resource._uri]._data = resource._data
 
 
 class ResponseCache(dict):
