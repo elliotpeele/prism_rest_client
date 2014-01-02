@@ -16,8 +16,9 @@ class Client(object):
     def __init__(self, headers=None):
         self.headers = headers
 
-    def get(self, uri):
-        return requests.get(uri, headers=self.headers)
+    def get(self, uri, params=None):
+        return requests.get(uri, headers=self.headers,
+                params=params and params or {})
 
     def post(self, uri, data):
         return requests.post(uri, data, headers=self.headers)

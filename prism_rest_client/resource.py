@@ -27,9 +27,9 @@ class Resource(BaseResource):
         self._dirty = False
         self._local_cache = {}
 
-    def __getattr__(self, name):
+    def __getattr__(self, name, params=None):
         val = self._data.get(name)
-        obj = self._getObj(name, val)
+        obj = self._getObj(name, val, params=params)
         if obj is not None:
             return obj
         elif val is None:
@@ -55,9 +55,9 @@ class Resource(BaseResource):
 
             self._data[name] = value
 
-    def _getObj(self, name, val):
+    def _getObj(self, name, val, params=None):
         if isinstance(val, types.StringTypes) and val.startswith('http://'):
-            return self._cache.get(val)
+            return self._cache.get(val, params=params)
 
         if isinstance(val, dict):
             if 'id' in val:
@@ -72,6 +72,9 @@ class Resource(BaseResource):
 
     def _setObj(self, val, name, value):
         return False
+
+    def query(self, name, **kwargs):
+        return self.__getattr__(name, params=kwargs)
 
     def persist(self):
         if self._dirty:

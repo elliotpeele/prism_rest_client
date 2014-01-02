@@ -23,18 +23,19 @@ class InstanceCache(dict):
         self.client = client
         self.resp_cache = ResponseCache()
 
-    def __getitem__(self, uri, force=False, cache=True):
+    def __getitem__(self, uri, force=False, cache=True, params=None):
         if uri in self and not force and cache:
             return dict.__getitem__(self, uri)
         else:
-            resp = self.client.get(uri)
+            resp = self.client.get(uri, params=params)
             return self.get_by_response(resp, cache=cache)
 
-    def get(self, uri, default=Default, force=False, cache=True):
+    def get(self, uri, default=Default, force=False, cache=True, params=None):
         if uri not in self and not force and default is not Default:
             return default
         else:
-            return self.__getitem__(uri, force=force, cache=cache)
+            return self.__getitem__(uri, force=force, cache=cache,
+                    params=params)
 
     def get_by_response(self, resp, cache=True):
         resp.close()
