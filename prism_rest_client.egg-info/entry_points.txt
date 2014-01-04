@@ -1,5 +1,0 @@
-      [paste.app_factory]
-      main = prism_rest:main
-      [console_scripts]
-      initialize_prism_rest_db = prism_rest.scripts.initializedb:main
-      
