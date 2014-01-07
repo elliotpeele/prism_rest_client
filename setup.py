@@ -6,6 +6,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
 
 requires = [
+        'requests',
     ]
 
 setup(name='prism_rest_client',
@@ -18,7 +19,7 @@ setup(name='prism_rest_client',
         ],
       author='Elliot Peele',
       author_email='elliot@bentlogic.net',
-      url='',
+      url='https://github.com/elliotpeele/prism_rest_client',
       keywords='web rest client',
       packages=find_packages(),
       include_package_data=True,
