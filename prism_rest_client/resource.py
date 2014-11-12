@@ -73,8 +73,8 @@ class Resource(BaseResource):
     def _setObj(self, val, name, value):
         return False
 
-    def query(self, name, **kwargs):
-        return self.__getattr__(name, params=kwargs)
+    def query(self, n_, **kwargs):
+        return self.__getattr__(n_, params=kwargs)
 
     def persist(self):
         if self._dirty:
