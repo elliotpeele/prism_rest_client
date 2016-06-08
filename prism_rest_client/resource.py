@@ -56,7 +56,8 @@ class Resource(BaseResource):
             self._data[name] = value
 
     def _getObj(self, name, val, params=None):
-        if isinstance(val, types.StringTypes) and val.startswith('http://'):
+        if isinstance(val, types.StringTypes) and (val.startswith('http://')
+                or val.startswith('https://')):
             return self._cache.get(val, params=params)
 
         if isinstance(val, dict):

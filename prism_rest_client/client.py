@@ -13,18 +13,22 @@
 import requests
 
 class Client(object):
-    def __init__(self, headers=None):
+    def __init__(self, headers=None, verify=True):
         self.headers = headers
+        self.verify = verify
 
     def get(self, uri, params=None):
         return requests.get(uri, headers=self.headers,
-                params=params and params or {})
+                params=params and params or {},
+                verify=self.verify)
 
     def post(self, uri, data):
-        return requests.post(uri, data, headers=self.headers)
+        return requests.post(uri, data, headers=self.headers,
+                verify=self.verify)
 
     def delete(self, uri):
-        return requests.delete(uri, headers=self.headers)
+        return requests.delete(uri, headers=self.headers, verify=self.verify)
 
     def put(self, uri, data):
-        return requests.put(uri, data, headers=self.headers)
+        return requests.put(uri, data, headers=self.headers,
+                verify=self.verify)

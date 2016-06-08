@@ -18,5 +18,5 @@ and possibly others.
 from .client import Client
 from .cache import InstanceCache
 
-def open(uri, headers=None):
-    return InstanceCache(Client(headers=headers)).get(uri)
+def open(uri, headers=None, verify=False):
+    return InstanceCache(Client(headers=headers, verify=verify)).get(uri)
