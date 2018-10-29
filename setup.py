@@ -10,7 +10,7 @@ requires = [
     ]
 
 setup(name='prism_rest_client',
-      version='0.1',
+      version='0.2',
       description='prism_rest_client',
       long_description=README,
       classifiers=[
